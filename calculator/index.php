@@ -47,7 +47,7 @@
                 case "add":
                     $value = $num01 + $num02;
                     break;
-                case "substract":
+                case "substraction":
                     $value = $num01 - $num02;
                     break;
                 case "multiply":
