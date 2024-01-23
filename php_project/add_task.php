@@ -103,15 +103,19 @@ include('config/constants.php')
 
 <?php
 if (isset($_POST['submit'])) {
-    $taks_name = $_POST['task_name'];
-    $task_description = $_POST['task_description'];
-    $list_id = $_POST['list_id'];
-    $priority = $_POST['priority'];
-    $deadline = $_POST['deadline'];
+    $taks_name = stripcslashes($_POST['task_name']);
+    $task_description = stripcslashes($_POST['task_description']);
+    $list_id = stripcslashes($_POST['list_id']);
+    $priority = stripcslashes($_POST['priority']);
+    $deadline = stripcslashes($_POST['deadline']);
 
-    $con2 = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con2));
-    $bd_select2 = mysqli_select_db($con2, DB_NAME) or die(mysqli_error($con2));
-
+    
+    $con2 = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysqli_error($con2));
+    $taks_name = mysqli_real_escape_string($con2, $taks_name);
+    $task_description = mysqli_real_escape_string($con2, $task_description);
+    $list_id = mysqli_real_escape_string($con2, $list_id);
+    $priority = mysqli_real_escape_string($con2, $priority);
+    $deadline = mysqli_real_escape_string($con2, $deadline);
 
     echo $sql2 = "INSERT INTO tasks SET
         task_name = '$taks_name',

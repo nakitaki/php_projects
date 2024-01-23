@@ -2,10 +2,10 @@
 include('config/constants.php');
 
 if (isset($_GET['list_id'])) {
-    $list_id = $_GET['list_id'];
+    $list_id = stripcslashes($_GET['list_id']);
 
-    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
-    $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
+    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysqli_error($con));
+    $list_id = mysqli_real_escape_string($con, $list_id);
 
     $sql = "SELECT * FROM lists WHERE list_id=$list_id";
     $res = mysqli_query($con, $sql);
@@ -84,12 +84,12 @@ if (isset($_GET['list_id'])) {
 
 <?php
 if (isset($_POST['submit'])) {
-    $list_name = $_POST['list_name'];
-    $list_description = $_POST['list_description'];
+    $list_name = stripcslashes($_POST['list_name']);
+    $list_description = stripcslashes($_POST['list_description']);
 
-    $con2 = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con2));
-    $bd_select2 = mysqli_select_db($con2, DB_NAME) or die(mysqli_error($con2));
-
+    $con2 = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysqli_error($con2));
+    $list_name = mysqli_real_escape_string($con2, $list_name);
+    $list_description = mysqli_real_escape_string($con2, $list_description);
 
     $sql2 = "UPDATE lists SET
         list_name = '$list_name',

@@ -60,19 +60,13 @@ include('config/constants.php');
 //Check whether the form is submitted or not
 if (isset($_POST['submit'])) {
     //Get the values from form and save it in variables
-    $list_name = $_POST['list_name'];
-    $list_description = $_POST['list_description'];
+    $list_name = stripcslashes($_POST['list_name']);
+    $list_description = stripcslashes($_POST['list_description']);
 
     //connect database
-    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
-    if (!$con) {
-        die('Connection failed: ' . mysqli_connect_error());
-    }
-
-    $db_select = mysqli_select_db($con, DB_NAME);
-    if (!$db_select) {
-        die('Database selection failed: ' . mysqli_error($conn));
-    }
+    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die('Database selection failed: ' . mysqli_error($conn));
+    $list_name = mysqli_real_escape_string($con, $list_name);
+    $list_description = mysqli_real_escape_string($con, $list_description);
 
     //sql query to insert data to database
     $sql = "INSERT INTO lists SET

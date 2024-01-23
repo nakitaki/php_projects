@@ -3,11 +3,11 @@ include('config/constants.php');
 
 //check task_id in url
 if (isset($_GET['task_id'])) {
-    $task_id = $_GET['task_id'];
+    $task_id = stripcslashes($_GET['task_id']);
 
-    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
-    $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
-
+    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysqli_error($con));
+    $task_id = mysqli_real_escape_string($con, $task_id);
+    
     $sql = "DELETE FROM tasks WHERE task_id=$task_id";
 
     $res = mysqli_query($con, $sql);

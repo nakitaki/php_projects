@@ -2,11 +2,12 @@
 include('config/constants.php');
 
 if (isset($_GET['task_id'])) {
-    $task_id = $_GET['task_id'];
-
+    $task_id = stripcslashes($_GET['task_id']);
+    
     $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
     $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
 
+    $task_id = mysqli_real_escape_string($con, $task_id);
     $sql = "SELECT * FROM tasks WHERE task_id=$task_id";
 
     $res = mysqli_query($con, $sql);
@@ -143,14 +144,21 @@ if (isset($_GET['task_id'])) {
 
 <?php
 if (isset($_POST['submit'])) {
-    $task_name = $_POST['task_name'];
-    $task_description = $_POST['task_description'];
-    $list_id = $_POST['list_id'];
-    $priority = $_POST['priority'];
-    $deadline = $_POST['deadline'];
+    $task_name =  stripcslashes($_POST['task_name']);
+    $task_description = stripcslashes($_POST['task_description']);
+    $list_id = stripcslashes($_POST['list_id']);
+    $priority = stripcslashes($_POST['priority']);
+    $deadline = stripcslashes($_POST['deadline']);
 
+    
     $con3 = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con3));
     $bd_select3 = mysqli_select_db($con3, DB_NAME) or die(mysqli_error($con3));
+
+    $task_name = mysqli_real_escape_string($con3, $task_name);
+    $task_description = mysqli_real_escape_string($con3, $task_description);
+    $list_id = mysqli_real_escape_string($con3, $list_id);
+    $priority = mysqli_real_escape_string($con3, $priority);
+    $deadline = mysqli_real_escape_string($con3, $deadline);
 
     $sql3 = "UPDATE tasks SET
     task_name = '$task_name',

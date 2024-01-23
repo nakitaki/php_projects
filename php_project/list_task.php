@@ -1,6 +1,7 @@
 <?php
 include('config/constants.php');
-$list_id_url = $_GET['list_id'];
+$list_id_url = stripcslashes($_GET['list_id']);
+
 ?>
 
 <html>
@@ -21,15 +22,15 @@ $list_id_url = $_GET['list_id'];
             $bd_select2 = mysqli_select_db($con2, DB_NAME) or die(mysqli_error($con2));
 
             $sql2 = "SELECT * FROM lists";
-
+            
             $res2 = mysqli_query($con2, $sql2);
 
             if ($res2 == true) {
                 while ($row = mysqli_fetch_assoc($res2)) {
                     $list_id = $row['list_id'];
                     $list_name = $row['list_name'];
-
-            ?>
+                    
+                    ?>
 
                     <a href="<?php echo SITEURL; ?>list_task.php?list_id=<?php echo $list_id; ?>"><?php echo $list_name; ?></a>
 
@@ -44,7 +45,7 @@ $list_id_url = $_GET['list_id'];
 
         <div class="all-tasks">
             <a class="btn-primary" href="<?php echo SITEURL ?>">Add Task</a>
-
+            
             <table class="tbl-full">
                 <tr>
                     <th>S.N.</th>
@@ -53,11 +54,13 @@ $list_id_url = $_GET['list_id'];
                     <th>Deadline</th>
                     <th>Actions</th>
                 </tr>
-
+                
                 <?php
                 $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
                 $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
-
+                
+                $list_id_url = mysqli_real_escape_string($con, $list_id_url);
+                
                 $sql = "SELECT * FROM tasks WHERE list_id='$list_id_url'";
 
                 $res = mysqli_query($con, $sql);

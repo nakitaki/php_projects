@@ -2,10 +2,10 @@
 include('config/constants.php');
 
 if (isset($_GET['list_id'])) {
-    $list_id = $_GET['list_id'];
+    $list_id = stripcslashes($_GET['list_id']);
 
-    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
-    $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
+    $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die(mysqli_error($con));
+    $list_id = mysqli_real_escape_string($con, $list_id);
 
     $sql = "SELECT * FROM lists WHERE list_id=$list_id";
     $res = mysqli_query($con, $sql);
