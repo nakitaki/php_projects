@@ -48,23 +48,29 @@ include('config/constants.php')
             <?php
             if (isset($_SESSION['add'])) {
             ?>
-        <h4 class="green"><?php echo $_SESSION['add'] . "frbyen"; ?></h4>
+        <h4 class="green"><?php echo $_SESSION['add'] ?></h4>
     <?php
                 unset($_SESSION['add']);
             }
 
             if (isset($_SESSION['delete'])) {
-                echo $_SESSION['delete'];
+    ?>
+        <h4 class="orange"><?php echo $_SESSION['delete'] ?></h4>
+    <?php
                 unset($_SESSION['delete']);
             }
 
             if (isset($_SESSION['update'])) {
-                echo $_SESSION['update'];
+    ?>
+        <h4 class="green"><?php echo $_SESSION['update'] ?></h4>
+    <?php
                 unset($_SESSION['update']);
             }
 
             if (isset($_SESSION['delete_fail'])) {
-                echo $_SESSION['delete_fail'];
+    ?>
+        <h4 class="red"><?php echo $_SESSION['delete_fail'] ?></h4>
+    <?php
                 unset($_SESSION['delete_fail']);
             }
 
@@ -109,10 +115,17 @@ include('config/constants.php')
                             <td><?php echo $sn++; ?></td>
                             <td><?php echo $task_name; ?></td>
                             <td><?php echo $priority; ?></td>
-                            <td><?php echo $deadline; ?></td>
+                            <td><?php
+                                if ($deadline != '0000-00-00') {
+                                    echo $deadline;
+                                } else {
+                                    echo 'No deadline set';
+                                }
+                                ?></td>
                             <td>
                                 <a href="<?php echo SITEURL; ?>update_task.php?task_id=<?php echo $task_id; ?>">Update</a>
-                                <a href="<?php echo SITEURL; ?>delete_task.php?task_id=<?php echo $task_id; ?>">Delete</a>
+                                <a href="#" onclick="confirmDelete(<?php echo $task_id; ?>)">Delete</a>
+                                <a href="<?php echo SITEURL; ?>details_task.php?task_id=<?php echo $task_id; ?>">Details</a>
                             </td>
                         </tr>
                     <?php
@@ -120,7 +133,7 @@ include('config/constants.php')
                 } else {
                     ?>
                     <tr>
-                        <td colspan="5">No Task Added Yet</td>
+                        <td class="nothing" colspan="5">No Task Added Yet</td>
                     </tr>
             <?php
                 }
@@ -134,6 +147,16 @@ include('config/constants.php')
 
     </div>
     </div>
+
+    <script>
+        function confirmDelete(taskId) {
+            var confirmation = confirm('Are you sure you want to delete?');
+
+            if (confirmation) {
+                window.location.href = '<?php echo SITEURL; ?>delete_task.php?task_id=' + taskId;
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -76,10 +76,18 @@ $list_id_url = $_GET['list_id'];
                                 <td>1. </td>
                                 <td><?php echo $task_name; ?></td>
                                 <td><?php echo $priority; ?></td>
-                                <td><?php echo $deadline; ?></td>
+                                <td>
+                                    <?php
+                                    if ($deadline != '0000-00-00') {
+                                        echo $deadline;
+                                    } else {
+                                        echo 'No deadline set';
+                                    }
+                                    ?>
+                                </td>
                                 <td>
                                     <a href="<?php echo SITEURL; ?>update_task.php?task_id=<?php echo $task_id; ?>">Update</a>
-                                    <a href="<?php echo SITEURL; ?>delete_task.php?task_id=<?php echo $task_id; ?>">Delete</a>
+                                    <a href="#" onclick="confirmDelete(<?php echo $task_id; ?>)">Delete</a>
                                 </td>
                             </tr>
 
@@ -88,7 +96,7 @@ $list_id_url = $_GET['list_id'];
                     } else {
                         ?>
                         <tr>
-                            <td colspan="5">No tasks added on this list.</td>
+                            <td class="nothing" colspan="5">No tasks added on this list.</td>
                         </tr>
                 <?php
                     }
@@ -99,6 +107,15 @@ $list_id_url = $_GET['list_id'];
 
         </div>
     </div>
+    <script>
+        function confirmDelete(taskId) {
+            var confirmation = confirm('Are you sure you want to delete?');
+
+            if (confirmation) {
+                window.location.href = '<?php echo SITEURL; ?>delete_task.php?task_id=' + taskId;
+            }
+        }
+    </script>
 </body>
 
 </html>

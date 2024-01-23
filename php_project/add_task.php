@@ -20,80 +20,82 @@ include('config/constants.php')
         <p>
             <?php
             if (isset($_SESSION['add_fail'])) {
-                echo $_SESSION['add_fail'];
+            ?>
+        <h4 class="red"><?php echo $_SESSION['add_fail'] ?></h4>
+    <?php
                 unset($_SESSION['add_fail']);
             }
 
 
-            ?>
-        </p>
-        <form method="POST" action="">
-            <table class="tbl-half">
-                <tr>
-                    <td>Task Name: </td>
-                    <td><input type="text" name="task_name" placeholder="Type your Task Name" required="required"></td>
-                </tr>
-                <tr>
-                    <td>Task Description: </td>
-                    <td><textarea name="task_description" placeholder="Type Task Description"></textarea></td>
-                </tr>
-                <tr>
-                    <td>Select List: </td>
-                    <td>
-                        <select name="list_id">
+    ?>
+    </p>
+    <form method="POST" action="">
+        <table class="tbl-half">
+            <tr>
+                <td>Task Name: </td>
+                <td><input type="text" name="task_name" placeholder="Type your Task Name" required="required"></td>
+            </tr>
+            <tr>
+                <td>Task Description: </td>
+                <td><textarea name="task_description"placeholder="Type Task Description"></textarea></td>
+            </tr>
+            <tr>
+                <td>Select List: </td>
+                <td>
+                    <select name="list_id">
 
-                            <?php
-                            $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
-                            $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
+                        <?php
+                        $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con));
+                        $bd_select = mysqli_select_db($con, DB_NAME) or die(mysqli_error($con));
 
-                            $sql = "SELECT * FROM lists";
-                            $res = mysqli_query($con, $sql);
+                        $sql = "SELECT * FROM lists";
+                        $res = mysqli_query($con, $sql);
 
-                            if ($res == true) {
-                                $count_rows = mysqli_num_rows($res);
+                        if ($res == true) {
+                            $count_rows = mysqli_num_rows($res);
 
-                                if ($count > 0) {
-                                } else {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $list_id = $row['list_id'];
-                                        $list_name = $row['list_name'];
-                            ?>
-                                        <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
-                                <?php
-                                    }
-                                }
+                            if ($count > 0) {
                             } else {
-                                ?>
-                                <option value="0">None</option>
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $list_id = $row['list_id'];
+                                    $list_name = $row['list_name'];
+                        ?>
+                                    <option value="<?php echo $list_id; ?>"><?php echo $list_name; ?></option>
                             <?php
+                                }
                             }
-
+                        } else {
                             ?>
+                            <option value="0">None</option>
+                        <?php
+                        }
 
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Priority: </td>
-                    <td>
-                        <select name="priority">
-                            <option value="High">High</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
-                    </td>
-                </tr>
+                        ?>
 
-                <tr>
-                    <td>Deadline: </td>
-                    <td><input type="date" name="deadline"></td>
-                </tr>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Priority: </td>
+                <td>
+                    <select name="priority">
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </td>
+            </tr>
 
-                <tr>
-                    <td><input class="btn-primary btn-lg" type="submit" name="submit" value="SAVE"></td>
-                </tr>
-            </table>
-        </form>
+            <tr>
+                <td>Deadline: </td>
+                <td><input type="date" name="deadline"></td>
+            </tr>
+
+            <tr>
+                <td><input class="btn-primary btn-lg" type="submit" name="submit" value="SAVE"></td>
+            </tr>
+        </table>
+    </form>
     </div>
 </body>
 

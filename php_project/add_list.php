@@ -23,7 +23,9 @@ include('config/constants.php');
             //check whether the session is created or not
             if (isset($_SESSION['add_fail'])) {
                 //display session message
-                echo $_SESSION['add_fail'];
+                ?>
+        <h4 class="red"><?php echo $_SESSION['add_fail'] ?></h4>
+    <?php
 
                 //remove the message after displaying once
                 unset($_SESSION['add_fail']);
@@ -40,7 +42,7 @@ include('config/constants.php');
                 </tr>
                 <tr>
                     <td>List Description: </td>
-                    <td><textarea name="list_description" placeholder="Type list description here"></textarea></td>
+                    <td><textarea name="list_description"placeholder="Type list description here"></textarea></td>
                 </tr>
 
                 <tr>

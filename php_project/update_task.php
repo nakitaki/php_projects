@@ -47,7 +47,9 @@ if (isset($_GET['task_id'])) {
         <p>
             <?php
             if (isset($_SESSION["update_fail"])) {
-                echo $_SESSION['update_fail'];
+                ?>
+        <h4 class="red"><?php echo $_SESSION['update_fail'] ?></h4>
+    <?php
                 unset($_SESSION['update_fail']);
             }
             ?>
@@ -63,9 +65,7 @@ if (isset($_GET['task_id'])) {
                 <tr>
                     <td>Task Description:</td>
                     <td>
-                        <textarea name="task_description">
-                        <?php echo $task_description ?>
-                    </textarea>
+                        <textarea name="task_description"><?php echo $task_description ?></textarea>
                     </td>
                 </tr>
                 <tr>

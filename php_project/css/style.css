@@ -23,6 +23,17 @@ h4.green{
     padding: 2% 0;
 }
 
+.orange{
+    color: #d56a3f;
+    padding: 2% 0;
+}
+
+h4.red{
+    color: red;
+    padding: 2% 0;
+}
+
+
 h3{
     margin: 2% 0;
     color: #4f2b83;
@@ -96,5 +107,9 @@ table tr td{
 
 textarea:focus, input:focus{
     outline: none;
+}
+
+.nothing{
+    text-align: center;
 }
   

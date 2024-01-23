@@ -23,24 +23,32 @@ include('config/constants.php')
             //check whether the session is created or not
             if (isset($_SESSION['add'])) {
                 //display session message
-                echo $_SESSION['add'];
+                ?>
+        <h4 class="green"><?php echo $_SESSION['add'] ?></h4>
+    <?php
 
                 //remove the message after displaying once
                 unset($_SESSION['add']);
             }
 
             if (isset($_SESSION['delete'])) {
-                echo $_SESSION['delete'];
+                ?>
+        <h4 class="orange"><?php echo $_SESSION['delete'] ?></h4>
+    <?php
                 unset($_SESSION['delete']);
             }
 
             if (isset($_SESSION['update'])) {
-                echo $_SESSION['update'];
+                ?>
+        <h4 class="green"><?php echo $_SESSION['update'] ?></h4>
+    <?php
                 unset($_SESSION['update']);
             }
 
             if (isset($_SESSION['delete_fail'])) {
-                echo $_SESSION['delete_fail'];
+                ?>
+        <h4 class="red"><?php echo $_SESSION['delete_fail'] ?></h4>
+    <?php
                 unset($_SESSION['delete_fail']);
             }
 
@@ -85,8 +93,9 @@ include('config/constants.php')
                                 <td><?php echo $sn++ ?></td>
                                 <td><?php echo $list_name ?></td>
                                 <td>
-                                    <a href="<?php echo SITEURL; ?>update_list.php?list_id=<?php echo $list_id; ?>"">Update</a>
-                                <a href=" <?php echo SITEURL; ?>delete_list.php?list_id=<?php echo $list_id; ?>">Delete</a>
+                                    <a href="<?php echo SITEURL; ?>update_list.php?list_id=<?php echo $list_id; ?>">Update</a>
+                                    <a href="#" onclick="confirmDelete(<?php echo $list_id; ?>)">Delete</a>
+                                    <a href="<?php echo SITEURL; ?>details_list.php?list_id=<?php echo $list_id; ?>">Details</a>
                                 </td>
                             </tr>
                         <?php
@@ -94,7 +103,7 @@ include('config/constants.php')
                     } else {
                         ?>
                         <tr>
-                            <td colspan="3">No List Added Yet</td>
+                            <td class="nothing" colspan="3">No List Added Yet</td>
                         </tr>
                 <?php
                     }
@@ -105,6 +114,15 @@ include('config/constants.php')
             </table>
         </div>
     </div>
+    <script>
+        function confirmDelete(listId) {
+            var confirmation = confirm('Are you sure you want to delete?');
+
+            if (confirmation) {
+                window.location.href = '<?php echo SITEURL; ?>delete_list.php?list_id=' + listId;
+            }
+        }
+    </script>
 </body>
 
 </html>

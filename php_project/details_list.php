@@ -42,15 +42,16 @@ if (isset($_GET['list_id'])) {
 
         </div>
 
-        <h3>Update List Page</h3>
+        <h3>List details</h3>
 
         <p>
             <?php
             //check whether the session is created or not
             if (isset($_SESSION['update_fall'])) {
                 ?>
-        <h4 class="red"><?php echo $_SESSION['update_fall'] ?></h4>
+        <h4 class="green"><?php echo $_SESSION['update_fall'] ?></h4>
     <?php
+
                 unset($_SESSION['update_fall']);
             }
             ?>
@@ -61,18 +62,17 @@ if (isset($_GET['list_id'])) {
             <table class="tbl-half">
                 <tr>
                     <td>List Name:</td>
-                    <td><input type="text" name="list_name" value="<?php echo $list_name; ?>" required="required"></td>
+                    <td><?php echo $list_name; ?></td>
                 </tr>
 
                 <tr>
                     <td>List Description: </td>
-                    <td>
-                        <textarea name="list_description"><?php echo $list_description; ?></textarea>
-                    </td>
+                    <td><?php echo $list_description; ?></td>
                 </tr>
 
                 <tr>
-                    <td><input class="btn-primary" type="submit" name="submit" value="UPDATE"></td>
+                    <td><a  class="btn-primary"  href="<?php echo SITEURL; ?>update_list.php?list_id=<?php echo $list_id; ?>">Update</a></td>
+                    
                 </tr>
             </table>
         </form>
@@ -81,29 +81,3 @@ if (isset($_GET['list_id'])) {
 
 </html>
 
-
-<?php
-if (isset($_POST['submit'])) {
-    $list_name = $_POST['list_name'];
-    $list_description = $_POST['list_description'];
-
-    $con2 = mysqli_connect(DB_SERVER, DB_USER, DB_PASS) or die(mysqli_error($con2));
-    $bd_select2 = mysqli_select_db($con2, DB_NAME) or die(mysqli_error($con2));
-
-
-    $sql2 = "UPDATE lists SET
-        list_name = '$list_name',
-        list_description = '$list_description'
-        WHERE list_id = $list_id";
-
-    $res2 = mysqli_query($con2, $sql2);
-
-    if ($res2 == true) {
-        $_SESSION['update'] = "List Updated Seccessfully";
-        header('location:' . SITEURL . 'manage_list.php');
-    } else {
-        $_SESSION['update_fail'] = "Failed to Update List";
-        header('location:' . SITEURL . 'update_list.php?list_id=' . $list_id);
-    }
-}
-?>
